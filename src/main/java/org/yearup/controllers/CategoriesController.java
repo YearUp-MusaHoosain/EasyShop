@@ -54,14 +54,14 @@ public class CategoriesController
     public Category getById(@PathVariable int id)
     {
         // get the category by id
-        try
-        {
+//        try
+//        {
             return categoryDao.getById(id);
-        }
-        catch(Exception ex)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
+//        }
+//        catch(Exception ex)
+//        {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+//        }
     }
 
     // the url to return all products in category 1 would look like this
@@ -83,7 +83,8 @@ public class CategoriesController
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(path = "/categories", method = RequestMethod.POST)
+    @RequestMapping(path = "", method = RequestMethod.POST)
+//    @PostMapping("")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Category addCategory(@RequestBody Category category)
     {
@@ -102,7 +103,8 @@ public class CategoriesController
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(path = "/categories/{id}", method = RequestMethod.PUT)
+    @RequestMapping(path = "{id}", method = RequestMethod.PUT)
+//    @PutMapping("{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public void updateCategory(@PathVariable int id, @RequestBody Category category)
     {
@@ -122,7 +124,8 @@ public class CategoriesController
     // add annotation to call this method for a DELETE action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(path = "/categories/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
+//    @DeleteMapping("{id}")
     public void deleteCategory(@PathVariable int id)
     {
         // delete the category by id
