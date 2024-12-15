@@ -28,7 +28,9 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
         // get all categories
         List<Category> categories = new ArrayList<>();
 
-        String sql = "SELECT * FROM categories;";
+        String sql = """
+               SELECT *
+               FROM categories;""";
 
         try(Connection connection = getConnection();
             PreparedStatement query = connection.prepareStatement(sql);
@@ -56,7 +58,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
                 SELECT
                 *
                 FROM categories
-                WHERE CategoryId = ?;""";
+                WHERE category_id = ?;""";
 
         try(Connection connection = getConnection();
             PreparedStatement query = connection.prepareStatement(sql);

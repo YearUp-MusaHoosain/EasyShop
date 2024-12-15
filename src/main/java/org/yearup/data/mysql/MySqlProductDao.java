@@ -24,11 +24,20 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
     {
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products " +
-                "WHERE (category_id = ? OR ? = -1) " +
-                "   AND (price <= ? OR ? = -1) " +
-                "   AND (price >= ? OR ? = -1) " +
-                "   AND (color = ? OR ? = '') ";
+        String sql = """
+                SELECT * FROM products
+                WHERE (category_id = ? OR ? = -1)
+                AND (price >= ? OR ? = -1)
+                
+                # ------------------------------------------------------------------------------- #
+                #  BUG 2: SORTING BY MIN AND MAX PRICE WAS RETURNING INCORRECT RESULTS            #
+                # ------------------------------------------------------------------------------- #
+                #  SOLUTION: FIXED QUERY BY ADDING LINE FOR MAX PRICE TO RETURN CORRECT RESULTS.  #                                            #
+                # ------------------------------------------------------------------------------- #
+                AND (price <= ? OR ? = -1)
+                
+                AND (color = ? OR ? = '')
+                """;
 
         categoryId = categoryId == null ? -1 : categoryId;
         minPrice = minPrice == null ? new BigDecimal("-1") : minPrice;
@@ -40,10 +49,12 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, categoryId);
             statement.setInt(2, categoryId);
-            statement.setBigDecimal(3, maxPrice);
-            statement.setBigDecimal(4, maxPrice);
-            statement.setBigDecimal(5, minPrice);
-            statement.setBigDecimal(6, minPrice);
+            statement.setBigDecimal(3, minPrice);
+            statement.setBigDecimal(4, minPrice);
+
+            // TODO BUG 2 SOLUTION: ADD LINES FOR MAX PRICE
+            statement.setBigDecimal(5, maxPrice);
+            statement.setBigDecimal(6, maxPrice);
             statement.setString(7, color);
             statement.setString(8, color);
 

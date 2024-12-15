@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("products")
-@CrossOrigin("*")
+@CrossOrigin
 public class ProductsController
 {
     private ProductDao productDao;
@@ -81,7 +81,9 @@ public class ProductsController
     {
         try
         {
-            productDao.create(product);
+            // TODO Bug 2 - created a new product instead of updating the product
+            // productDao.create(product);
+            productDao.update(id, product);
         }
         catch(Exception ex)
         {
