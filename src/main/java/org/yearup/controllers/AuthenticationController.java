@@ -75,7 +75,7 @@ public class AuthenticationController {
             boolean exists = userDao.exists(newUser.getUsername());
             if (exists)
             {
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Already Exists.");
+                // throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Already Exists.");
                 return ResponseEntity
                         .status(HttpStatus.CONFLICT) // 409 Conflict
                         .body(null); // to return a null body so it's proper data type returned

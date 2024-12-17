@@ -29,16 +29,15 @@ public class TestDatabaseConfig
     private final String password;
 
     @Autowired
-    public TestDatabaseConfig()//@Value("${datasource.url}") String serverUrl,
-                              //@Value("${datasource.username}") String username,
-                              //@Value("${datasource.password}") String password,
-                              //@Value("${datasource.testdb}") String testDb)
-
+    public TestDatabaseConfig(@Value("${datasource.url}") String serverUrl,
+                              @Value("${datasource.username}") String username,
+                              @Value("${datasource.password}") String password,
+                              @Value("${datasource.testdb}") String testDb)
     {
-        String serverUrl = "jdbc:mysql://localhost:3306";
-        String username = "root";
-        String password = "yearup" ;
-        String testDb = "easyshop_test";
+//        String serverUrl = "jdbc:mysql://localhost:3306";
+//        String username = "root";
+//        String password = "yearup" ;
+//        String testDb = "easyshop_test";
         this.serverUrl = serverUrl;
         this.testDb = testDb;
         this.username = username;
