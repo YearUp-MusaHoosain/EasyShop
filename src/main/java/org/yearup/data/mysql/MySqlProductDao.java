@@ -32,7 +32,7 @@ public class MySqlProductDao extends MySqlDaoBase implements ProductDao
                 # ------------------------------------------------------------------------------- #
                 #  BUG 2: SORTING BY MIN AND MAX PRICE WAS RETURNING INCORRECT RESULTS            #
                 # ------------------------------------------------------------------------------- #
-                #  SOLUTION: FIXED QUERY BY ADDING LINE FOR MAX PRICE TO RETURN CORRECT RESULTS.  #                                            #
+                #  SOLUTION: FIXED QUERY BY ADDING LINE FOR MAX PRICE TO RETURN CORRECT RESULTS.  #
                 # ------------------------------------------------------------------------------- #
                 AND (price <= ? OR ? = -1)
                 
