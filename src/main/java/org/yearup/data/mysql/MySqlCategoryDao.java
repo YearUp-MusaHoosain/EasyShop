@@ -49,7 +49,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     }
 
     @Override
-    public Category getById(int categoryId)
+    public Category getById(int categoryId) //throws CategoryNotFoundException
     {
         // get category by id
         Category category;
@@ -108,7 +108,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     }
 
     @Override
-    public void update(int categoryId, Category category)
+    public void update(int categoryId, Category category) //throws CategoryNotFoundException
     {
         // update category
         String sql = """

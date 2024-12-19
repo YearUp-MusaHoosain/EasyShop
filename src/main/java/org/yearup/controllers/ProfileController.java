@@ -6,9 +6,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.ProfileDao;
+import org.yearup.data.UserDao;
 import org.yearup.models.Profile;
+import org.yearup.models.User;
 
-import java.util.List;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("profile")
@@ -16,38 +18,43 @@ import java.util.List;
 public class ProfileController {
 
     private ProfileDao profileDao;
+    private UserDao userDao;
 
     @Autowired
-    public ProfileController(ProfileDao profileDao){
+    public ProfileController(ProfileDao profileDao, UserDao userDao) {
         this.profileDao = profileDao;
+        this.userDao = userDao;
     }
 
-    @PreAuthorize("permitAll()")
-    @PostMapping()
-    public Profile create(@RequestBody Profile profile){
-        return profileDao.create(profile);
-    }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping()
+    public Profile getProfile(Principal principal){
+        if (principal == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User wasn't authenticated.");
+        }
+        String username = principal.getName();
 
-    @PreAuthorize("permitAll()")
-    @GetMapping("{userId}")
-    public Profile getByUserId(@PathVariable int userId){
-        Profile profile = profileDao.getByUserId(userId);
+        User user = userDao.getByUserName(username);
+        if (username == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found.");
+        }
 
+        Profile profile = profileDao.getProfileByUserId(user.getId());
         if (profile == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return profile;
     }
 
-    @PreAuthorize("permitAll()")
-    @GetMapping("")
-    public List<Profile> getAllProfile(){
-        return profileDao.getAllProfiles();
-    }
-
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("isAuthenticated()")
     @PutMapping()
-    public void update(@RequestBody Profile profile){
-        profileDao.update(profile);
+    public Profile updateProfile(@RequestBody Profile profile, Principal principal) {
+
+        String username = principal.getName();
+
+        int userId = userDao.getByUserName(username).getId();
+        profile.setUserId(userId);
+
+        return profileDao.update(profile);
     }
 }

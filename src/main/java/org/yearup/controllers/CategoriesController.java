@@ -28,6 +28,7 @@ public class CategoriesController
 
 
     // create an Autowired controller to inject the categoryDao and ProductDao
+    @Autowired
     public CategoriesController(CategoryDao categoryDao, ProductDao productDao) {
         this.categoryDao = categoryDao;
         this.productDao = productDao;
@@ -44,7 +45,7 @@ public class CategoriesController
         }
         catch(Exception ex)
         {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "There was a server error.");
         }
     }
 
@@ -110,6 +111,9 @@ public class CategoriesController
         {
             categoryDao.update(id, category);
         }
+//        catch (CategoryNotFoundException e) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found.");
+//        }
         catch(Exception ex)
         {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
