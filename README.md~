@@ -13,8 +13,8 @@ that had been reported by users, implementing and editing existing methods, and 
 **Features**
 ------------
 
-* 
-* Product management with CRUD operations
+* **User Authentication and Authorization:** The application allows users to register, login, and logout, and provides role-based access control to ensure that users can only access features and data that they are authorized to access.
+* **Product management with CRUD operations:** The application provides a comprehensive product management system, allowing administrators to create, read, update, and delete products, as well as manage product categories and inventory.
 * (WIP) - Shopping cart functionality with order management
 * (WIP) - Simple and intuitive user interface using HTML, CSS, and JavaScript
 
@@ -39,6 +39,18 @@ To run the application, follow these steps:
 3. Run the command `mvn spring-boot:run` to start the application
 4. Access the application at `http://localhost:8080` in your web browser
 
+**Configuration**
+------------------
+
+The application uses a number of configuration files to manage its behavior. These files include:
+
+* **application.properties:** This file contains configuration settings for the application, such as database connection settings and security settings.
+* **pom.xml:** This file contains configuration settings for the Maven build process.
+
+**Database**
+-----------
+The application uses a MySQL database to store its data. The database schema is defined in the `schema.sql` file.
+
 **Technologies Used**
 ----------------------
 
@@ -58,5 +70,3 @@ Contributions to the project are welcome! If you'd like to contribute, please fo
 ----------
 
 This project is licensed under the MIT License. See the LICENSE file for details.
-
-I hope this helps! Let me know if you have any questions or need further assistance.

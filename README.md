@@ -29,6 +29,28 @@ The project is structured into the following packages:
 * `org.yearup.models`: Model classes for representing data entities
 * `org.yearup.security`: Security-related classes for authentication and authorization
 
+**Interesting Piece of Code**
+------------------------------
+
+It was interesting to retrieve a list of products by their category ID. 
+Then that category is passed as a path variable in the URL endpoint that is being created in the @GetMapping annotation.
+
+```java
+ @GetMapping("{categoryId}/products")
+    public List<Product> getProductsById(@PathVariable int categoryId)
+    {
+        // get a list of product by categoryId
+        try
+        {
+            return productDao.listByCategoryId(categoryId);
+        }
+        catch(Exception ex)
+        {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
+```
+
 **Getting Started**
 -------------------
 
